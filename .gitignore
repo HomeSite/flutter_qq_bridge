@@ -13,6 +13,7 @@ pubspec.lock
 doc/api/
 
 TencentOpenApi.framework
+*/TencentOpenApi.framework
 .DS_Store
 */.idea
 .idea
