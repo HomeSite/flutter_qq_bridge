@@ -44,4 +44,4 @@ Icon?
 Pods/
 .symlinks/
 
-Frameworks.TencentOpenAPI.framework
+Frameworks/TencentOpenAPI.framework
