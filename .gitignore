@@ -12,7 +12,6 @@ pubspec.lock
 # If you don't generate documentation locally you can remove this line.
 doc/api/
 
-TencentOpenApi.framework
 .DS_Store
 */.idea
 .idea

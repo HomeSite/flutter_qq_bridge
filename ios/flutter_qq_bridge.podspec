@@ -14,6 +14,8 @@ A new Flutter plugin.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
+  s.vendored_frameworks = 'Classes/TencentOpenAPI.framework'
+  
   s.dependency 'Flutter'
   
   s.ios.deployment_target = '8.0'
