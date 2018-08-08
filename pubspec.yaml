@@ -1,6 +1,6 @@
 name: flutter_qq_bridge
 description: support QQ { login, getUserInfo, share news type }.
-version: 0.0.1
+version: 0.0.2
 author: neverwoods<zhanglulin1990@gmail.com>
 homepage: https://github.com/neverwoodsS
 
