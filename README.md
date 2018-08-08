@@ -4,6 +4,9 @@
 >2.获取用户基本信息
 >3.分享（目前仅支持新闻类型）
 
+## Update
+添加 TencentOpenAPI.framework
+
 ## Getting Started
 
 ### 1. 环境配置
