@@ -10,7 +10,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _loginRes = 'Unknown';
-  String _shareRes = 'Unknown';
+  String _shareQqRes = 'Unknown';
+  String _shareQzoneRes = 'Unknown';
   String _userInfo = 'Unknown';
 
   Tencent _tencent;
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  _share() async {
+  _shareQq() async {
     var res = await FlutterQqBridge.shareToQQ(ShareQqContent(
       title: 'Remeet-只有00后的脱单神器',
       summary: '我们只想做个简单干净的聊天软件，帮你遇见喜欢的人。',
@@ -37,7 +38,21 @@ class _MyAppState extends State<MyApp> {
     ));
 
     setState(() {
-      _shareRes = 'share -> code: ${res.code}, message:${res.message}';
+      _shareQqRes = 'share -> code: ${res.code}, message:${res.message}';
+    });
+  }
+
+  _shareQzone() async {
+    var res = await FlutterQqBridge.shareToQzone(ShareQqContent(
+      title: 'Remeet-只有00后的脱单神器',
+      summary: '我们只想做个简单干净的聊天软件，帮你遇见喜欢的人。',
+      targetUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.haisong.remeet',
+      imageUrl: 'http://pp.myapp.com/ma_icon/0/icon_52621236_1517135649/96',
+      appName: 'Remeet',
+    ));
+
+    setState(() {
+      _shareQzoneRes = 'share -> code: ${res.code}, message:${res.message}';
     });
   }
 
@@ -79,15 +94,22 @@ class _MyAppState extends State<MyApp> {
 
               Padding(padding: EdgeInsets.all(30.0),
                   child: GestureDetector(
-                    onTap: _share,
-                    child: Text('qq share \n $_shareRes', style: TextStyle(fontSize: 20.0, color: Colors.black),),
+                    onTap: _user,
+                    child: Text('qq user \n $_userInfo', style: TextStyle(fontSize: 20.0, color: Colors.black),),
                   )
               ),
 
               Padding(padding: EdgeInsets.all(30.0),
                   child: GestureDetector(
-                    onTap: _user,
-                    child: Text('qq user \n $_userInfo', style: TextStyle(fontSize: 20.0, color: Colors.black),),
+                    onTap: _shareQq,
+                    child: Text('qq share \n $_shareQqRes', style: TextStyle(fontSize: 20.0, color: Colors.black),),
+                  )
+              ),
+
+              Padding(padding: EdgeInsets.all(30.0),
+                  child: GestureDetector(
+                    onTap: _shareQzone,
+                    child: Text('qzone share \n $_shareQzoneRes', style: TextStyle(fontSize: 20.0, color: Colors.black),),
                   )
               ),
             ],

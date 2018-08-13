@@ -2,17 +2,16 @@ package com.zll.qq.flutterqqbridge;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
+import com.tencent.connect.share.QzoneShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
@@ -59,20 +58,15 @@ public class FlutterQqBridgePlugin implements MethodCallHandler {
         break;
       case "getUserInfo":
         listener.setResult(result);
-
-        String openId = call.argument("openId");
-        tencent.setOpenId(openId);
-
-        String accessToken = call.argument("accessToken");
-        Long expires = call.argument("expires");
-        tencent.setAccessToken(accessToken, expires.toString());
-
-
-        getUserInfo(listener);
+        getUserInfo(call, listener);
         break;
       case "shareToQQ":
         listener.setResult(result);
         shareToQQ(call, listener);
+        break;
+      case "shareToQzone":
+        listener.setResult(result);
+        shareToQzone(call, listener);
         break;
       default:
         result.notImplemented();
@@ -80,7 +74,14 @@ public class FlutterQqBridgePlugin implements MethodCallHandler {
     }
   }
 
-  private void getUserInfo(final OneListener listener) {
+  private void getUserInfo(MethodCall call, final OneListener listener) {
+    String openId = call.argument("openId");
+    tencent.setOpenId(openId);
+
+    String accessToken = call.argument("accessToken");
+    Long expires = call.argument("expires");
+    tencent.setAccessToken(accessToken, expires.toString());
+
     final UserInfo userInfo = new UserInfo(registrar.activity(), tencent.getQQToken());
     userInfo.getUserInfo(listener);
   }
@@ -96,6 +97,22 @@ public class FlutterQqBridgePlugin implements MethodCallHandler {
     params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, (String) call.argument("imageUrl"));
     params.putString(QQShare.SHARE_TO_QQ_APP_NAME, (String) call.argument("appName"));
     tencent.shareToQQ(registrar.activity(), params, listener);
+  }
+
+  private void shareToQzone(MethodCall call, final OneListener listener) {
+    final Bundle params = new Bundle();
+    int shareType = call.argument("shareType");
+
+    ArrayList<String> urls = new ArrayList<>();
+    urls.add((String) call.argument("imageUrl"));
+
+    params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, shareType);
+    params.putString(QzoneShare.SHARE_TO_QQ_TITLE, (String) call.argument("title"));
+    params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, (String) call.argument("summary")); //选填
+    params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, (String) call.argument("targetUrl")); //必填
+    params.putString(QzoneShare.SHARE_TO_QQ_APP_NAME, (String) call.argument("appName"));
+    params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, urls);
+    tencent.shareToQzone(registrar.activity(), params, listener);
   }
 
   private class OneListener implements IUiListener, PluginRegistry.ActivityResultListener {

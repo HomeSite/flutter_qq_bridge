@@ -48,6 +48,25 @@ class FlutterQqBridge {
     qqResult.message = result["Message"].toString();
     return qqResult;
   }
+
+  static Future<QQResult> shareToQzone(ShareQqContent shareContent) async {
+    Map<String, Object> params;
+    params = {
+      "shareType": 1,
+      "title": shareContent.title,
+      "targetUrl": shareContent.targetUrl,
+      "summary": shareContent.summary,
+      "imageUrl": shareContent.imageUrl,
+      "imageLocalUrl": shareContent.imageLocalUrl,
+      "appName": shareContent.appName,
+    };
+
+    final Map<dynamic, dynamic> result = await _channel.invokeMethod('shareToQzone', params);
+    QQResult qqResult = new QQResult();
+    qqResult.code = result["Code"];
+    qqResult.message = result["Message"].toString();
+    return qqResult;
+  }
 }
 
 class QQResult {
