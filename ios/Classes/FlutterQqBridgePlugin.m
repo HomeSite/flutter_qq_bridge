@@ -70,6 +70,24 @@
         QQApiSendResultCode sent = [QQApiInterface sendReq:req];
         
         [self handleSendResult:sent];
+    } else if ([@"shareToQzone" isEqualToString:call.method]) {
+        NSLog(@"shareToQzone in");
+        _result = result;
+        // 分享到 Qzone
+        NSDictionary *dict = call.arguments;
+        NSString *utf8String = dict[@"targetUrl"];
+        NSString *title = dict[@"title"];
+        NSString *description = dict[@"summary"];
+        NSString *previewImageUrl = dict[@"imageUrl"];
+        
+        QQApiNewsObject *newsObj = [QQApiNewsObject objectWithURL:[NSURL URLWithString:utf8String]
+                                                            title:title
+                                                      description:description
+                                                  previewImageURL:[NSURL URLWithString:previewImageUrl]];
+        SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+        QQApiSendResultCode sent = [QQApiInterface SendReqToQZone:req];
+        
+        [self handleSendResult:sent];
     }
     else {
         result(FlutterMethodNotImplemented);
