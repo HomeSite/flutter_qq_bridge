@@ -94,6 +94,8 @@ if (_tencent != null) { // _tencent from login success
 ```
 
 #### ④ 分享
+分享给好友：
+
 ```
 var res = await FlutterQqBridge.shareToQQ(ShareQQContent(
   title: 'Remeet-只有00后的脱单神器',
@@ -105,7 +107,23 @@ var res = await FlutterQqBridge.shareToQQ(ShareQQContent(
 
 // update UI
 setState(() {
-  _shareRes = 'share -> code: ${res.code}, message:${res.message}';
+  _shareQqRes = 'share -> code: ${res.code}, message:${res.message}';
+});
+```
+
+分享到 QQ 空间：
+
+```
+var res = await FlutterQqBridge.shareToQzone(ShareQqContent(
+  title: 'Remeet-只有00后的脱单神器',
+  summary: '我们只想做个简单干净的聊天软件，帮你遇见喜欢的人。',
+  targetUrl: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.haisong.remeet',
+  imageUrl: 'http://pp.myapp.com/ma_icon/0/icon_52621236_1517135649/96',
+  appName: 'Remeet',
+));
+
+setState(() {
+  _shareQzoneRes = 'share -> code: ${res.code}, message:${res.message}';
 });
 ```
 
